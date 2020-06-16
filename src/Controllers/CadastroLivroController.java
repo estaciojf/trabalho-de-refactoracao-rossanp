@@ -1,5 +1,6 @@
 package Controllers;
 
+import Functions.FunctionCadastroLivro;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,13 +15,12 @@ import Models.Livro;
 
 public class CadastroLivroController implements ActionListener {
 
-	private JTextField fieldTitle;
-	private JTextField fieldAuthor;
-	private JComboBox comboGender;
-	private JComboBox comboYear;
-	private JCheckBox isRead;
-	private List<Livro> listLivros;
-	
+	public JTextField fieldTitle;
+	public JTextField fieldAuthor;
+	public JComboBox comboGender;
+	public JComboBox comboYear;
+	public JCheckBox isRead;
+        public List<Livro> listLivros;
 	
 	public CadastroLivroController(
 			JTextField fieldTitle, 
@@ -34,53 +34,28 @@ public class CadastroLivroController implements ActionListener {
 		this.isRead = isRead;
 		
 		listLivros = new ArrayList<>();
-		
-		this.populateComboYear(comboYear);
-		this.populateComboGener(comboGender);
+                
+                this.populateComboYear(comboYear);
+		this.populateComboGender(comboGender);
 	}
-	
-	private void populateComboYear(JComboBox comboYear) {
-		this.comboYear = comboYear;
-		
-		int anoAtual = Calendar.getInstance().get(Calendar.YEAR); 
-		
-		for (int yearLoop = anoAtual ; yearLoop >= 1900 ; yearLoop --) {
-			this.comboYear.addItem(yearLoop);
-		}
-	}
-	
-	private void populateComboGener(JComboBox comboGender) {
-		this.comboGender = comboGender;
-		String[] genders = new String[] { "Terror", "Ficção", "Drama", "Aventura", "Comédia", "Técnico" };
-		for (String genderLoop : genders) {
-			this.comboGender.addItem(genderLoop);
-		}
-		
-	}
-	
+	FunctionCadastroLivro PopularDados = new FunctionCadastroLivro();
+        
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// TODO Auto-generated method stub
 		System.out.println(event.getActionCommand());
-		this.cadastrarLivro();
-	}
-	
-	public void cadastrarLivro() {
-		
-		Livro livro = new Livro(
-				this.fieldTitle.getText(), 
-				this.fieldAuthor.getText(),
-				this.comboGender.getSelectedItem().toString(),
-				Integer.parseInt(this.comboYear.getSelectedItem().toString()),
-				this.isRead.isSelected()
-				);
-		
-		listLivros.add(livro);
-		
-		for (int i = 0 ; i < listLivros.size() ; i ++ ) {
-			System.out.println(listLivros.get(i).toString());
-		}
-		
+		PopularDados.cadastrarLivro();
 	}
 
+    private void populateComboGender(JComboBox comboGender) {
+        this.comboGender = comboGender;
+        
+        PopularDados.functionComboGender(comboGender);
+    }
+
+    private void populateComboYear(JComboBox comboYear) {
+        this.comboYear = comboYear;
+        
+        PopularDados.functionComboYear(comboYear);
+    }
 }

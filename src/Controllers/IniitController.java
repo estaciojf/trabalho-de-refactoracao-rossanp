@@ -5,47 +5,28 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import DAO.LivroDAO;
+import Functions.FunctionsInitController;
 import Views.CadastroLivroView;
 
 public class IniitController implements ActionListener {
-
-	
+    
 	private CadastroLivroView cadastroView;
 	
 	public IniitController(CadastroLivroView cadastroView) {
 		this.cadastroView = cadastroView;
 	}
+        
+        FunctionsInitController funcaoInit = new FunctionsInitController(cadastroView);
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// TODO Auto-generated method stub
 		
 		switch(event.getActionCommand()){
-		case "Cadastrar": this.abrirCadastroView();
+		case "Cadastrar": funcaoInit.abrirCadastroView();
 		break;
-		case "Exibir": this.abrirExibirView();
+		case "Exibir": funcaoInit.abrirExibirView();
 		break;
 		}
 	}
-	
-	
-	private void abrirCadastroView() {
-		cadastroView = new CadastroLivroView();
-		cadastroView.setVisible(true);
-		
-		abrirExibirView();
-	}
-	
-	public void abrirExibirView() {
-		LivroDAO livroDao;
-		try {
-			livroDao = new LivroDAO();
-			System.out.println(livroDao.getAllLivros());
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }

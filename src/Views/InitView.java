@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controllers.IniitController;
+import Functions.FunctionsInitController;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -19,7 +20,7 @@ import javax.swing.JButton;
 
 public class InitView extends JFrame {
 
-	
+	private FunctionsInitController functionInit;
 	private CadastroLivroView cadastroView;
 	
 	private JPanel contentPane;
@@ -65,21 +66,12 @@ public class InitView extends JFrame {
 		btnCadastrar.setBounds(264, 183, 117, 29);
 		contentPane.add(btnCadastrar);
 		
-		
-		
-		IniitController handle = new IniitController(cadastroView);
-
-		
-
+		FunctionsInitController handle = new FunctionsInitController(cadastroView);
 		
 		handle.abrirExibirView();
 		
-		
-		
-		
-		
-		btnCadastrar.addActionListener(handle);
-		btnExibir.addActionListener(handle);
+		btnCadastrar.addActionListener((ActionListener) handle);
+		btnExibir.addActionListener((ActionListener) handle);
 	}
 	
 }

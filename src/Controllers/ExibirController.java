@@ -9,68 +9,30 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.LivroDAO;
+import Functions.FunctionExibirController;
 import Listeners.TableLivroListener;
 import Models.Livro;
-
-
-
 
 public class ExibirController implements ActionListener {
 	
 	private JTable table;
-	public String column[]={"Título","Autor", "Genero", "Ano", "Já Leu?"};  
-	DefaultTableModel model;
 
 	public ExibirController(JTable table) throws SQLException {
-		this.table = table;
-		this.model = (DefaultTableModel) table.getModel();
-		this.setTableColumns();
-		this.getLivros();
+            this.table = table;
+            funcaoExibir.model = (DefaultTableModel) table.getModel();
+            funcaoExibir.setTableColumns();
+            funcaoExibir.getLivros();
 		
+            TableLivroListener tableListener = new TableLivroListener(table);
 		
-		TableLivroListener tableListener = new TableLivroListener(table);
-		
-		table.getModel().addTableModelListener(tableListener);
+            table.getModel().addTableModelListener(tableListener);
 	}
 	
-	private void setTableColumns() {
-		for (String columnName : this.column) {
-			model.addColumn(columnName);
-		}
-	}
-	
-	public String getLivros() {
-		
-		this.model.setRowCount(0);
-		
-
-		try {
-			LivroDAO livroDao = new LivroDAO();
-			List<Livro> list = livroDao.getAllLivros();
-			
-			for (Livro livro : list) {
-				model.addRow(new Object[] {
-						livro.getTitle(),
-						livro.getAuthor(),
-						livro.getGender(),
-						livro.getYear(),
-						livro.isRead()
-				});
-			}
-		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
+        FunctionExibirController funcaoExibir = new FunctionExibirController();
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		this.getLivros();
+	public void actionPerformed(ActionEvent e) {		
+            funcaoExibir.getLivros();
 		
 	}
 }
